@@ -6,6 +6,7 @@ class Board
         this._columns = [];
         this._winners = [];
         this._connections = 4;
+        this._posible_winner = [];
     }
 
     draw() {
@@ -22,6 +23,7 @@ class Board
                 let whiteCoin = document.createElement('div');
                 whiteCoin.setAttribute('id', col.toString() + '-' + row.toString());
                 whiteCoin.setAttribute('class', 'white-coin');
+                whiteCoin.setAttribute('title', col.toString() + '-' + row.toString());
                 let cellEl = document.createElement('div');
                 cellEl.setAttribute('class', 'cell');
                 cellEl.setAttribute('row-id', row.toString());
@@ -81,6 +83,8 @@ class Board
     }
 
     checkWinnerCell(col, row) {
+        let searchConnections = this._connections;
+
         let directions = [
             {'x': 1, 'y': 0},
             {'x': 1, 'y': 1},
@@ -92,24 +96,25 @@ class Board
             let targetCol = col;
             let targetRow = row
             stack.push([col, row]);
-            for (let n=1; n<this._connections; n++) {
+            for (let n=1; n<searchConnections; n++) {
                 targetCol = targetCol + directions[i].x;
                 targetRow = targetRow + directions[i].y;
                 if ((targetCol >= 0) && (targetCol < this._width)
                     && (targetRow >= 0) && (targetRow < this._height)
                 ){
-                    console.log(targetCol, targetRow);
                     if (this._columns[col][row] === this._columns[targetCol][targetRow]) {
-                        console.log(this._columns[col][row], '=', this._columns[targetCol][targetRow]);
                         stack.push([targetCol, targetRow]);
                     }
                 }
             }
-            if (stack.length >= this._connections) {
+            if (stack.length >= searchConnections) {
                 this._winners = stack;
-                for (let w=0; w<this._winners.length; w++) {
-                    let winEl = document.getElementById(this._winners[w][0] + '-' + this._winners[w][1]);
-                    winEl.classList.add('winner');
+                if (searchConnections === this._connections) {
+                    for (let w=0; w<this._winners.length; w++) {
+                        let winEl = document.getElementById(this._winners[w][0]
+                            + '-' + this._winners[w][1]);
+                        winEl.classList.add('winner');
+                    }
                 }
                 return true;
             }
@@ -119,13 +124,78 @@ class Board
 
     computerTurn() {
         let done = false;
+        this.findPossibleWinner();
+        if (this._posible_winner.length>0) {
+            console.log("I have a ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
+            this.dropCoin(this._posible_winner[0][0], 'B');
+            return;
+        }
+        // just do a random draw
         while(!done) {
             let randomColumn = Math.floor(Math.random() * (this._width) );
             if (this.columnAvailable(randomColumn)) {
                 done = true;
                 this.dropCoin(randomColumn, 'B');
+                return;
             }
         }
+    }
+
+    findPossibleWinner() {
+        this._posible_winner = [];
+        let listTopEmptyCells = [];
+        // repeat for every column
+        for (let col=0; col<this._width; col++) {
+            // find lowest empty cell
+            for (let row=0; row<this._height; row++) {
+                if (this._columns[col][row] !== 'W') {
+                    if (row>0) {
+                        listTopEmptyCells.push([col,row-1]);
+                        row = this._height;
+                    }
+                }
+            }
+            if (this._columns[col][this._height - 1] === 'W') {
+                listTopEmptyCells.push([col,this._height - 1]);
+            }
+        }
+        for (let i=0; i<listTopEmptyCells.length; i++) {
+            if (this.isPosibleWinner(listTopEmptyCells[i][0], listTopEmptyCells[i][1])) {
+                this._posible_winner.push(listTopEmptyCells[i]);
+            }
+        }
+    }
+
+    isPosibleWinner(col, row) {
+        let searchConnections = this._connections - 1;
+        let directions = [
+            {'x': -1, 'y': 0},
+            {'x': -1, 'y': 1},
+            {'x': 0, 'y': 1},
+            {'x': 1, 'y': 1},
+            {'x': 1, 'y': 0},
+        ];
+        for (let i=0; i<directions.length; i++) {
+            let stack = [];
+            let targetCol = col;
+            let targetRow = row
+            for (let n=0; n<searchConnections; n++) {
+                targetCol = targetCol + directions[i].x;
+                targetRow = targetRow + directions[i].y;
+                if ((targetCol >= 0) && (targetCol < this._width)
+                    && (targetRow >= 0) && (targetRow < this._height)
+                ){
+                    if (this._columns[targetCol][targetRow] === "R") {
+                        stack.push([targetCol, targetRow]);
+                    }
+                }
+            }
+            if (stack.length >= searchConnections) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     makeCellWhite(col, row) {
