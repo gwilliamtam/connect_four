@@ -123,14 +123,23 @@ class Board
     }
 
     computerTurn() {
-        let done = false;
-        this.findPossibleWinner();
+        // find if computer Blue has a posible winner position
+        this.findPossibleWinner("B");
         if (this._posible_winner.length>0) {
-            console.log("I have a ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
+            console.log("Computer has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
+            this.dropCoin(this._posible_winner[0][0], 'B');
+            return;
+        }
+
+        // find if human Red has a posible winner position
+        this.findPossibleWinner("R");
+        if (this._posible_winner.length>0) {
+            console.log("Human has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
             this.dropCoin(this._posible_winner[0][0], 'B');
             return;
         }
         // just do a random draw
+        let done = false;
         while(!done) {
             let randomColumn = Math.floor(Math.random() * (this._width) );
             if (this.columnAvailable(randomColumn)) {
@@ -141,7 +150,7 @@ class Board
         }
     }
 
-    findPossibleWinner() {
+    findPossibleWinner(color) {
         this._posible_winner = [];
         let listTopEmptyCells = [];
         // repeat for every column
@@ -160,13 +169,13 @@ class Board
             }
         }
         for (let i=0; i<listTopEmptyCells.length; i++) {
-            if (this.isPosibleWinner(listTopEmptyCells[i][0], listTopEmptyCells[i][1])) {
+            if (this.isPosibleWinner(listTopEmptyCells[i][0], listTopEmptyCells[i][1], color)) {
                 this._posible_winner.push(listTopEmptyCells[i]);
             }
         }
     }
 
-    isPosibleWinner(col, row) {
+    isPosibleWinner(col, row, color) {
         let searchConnections = this._connections - 1;
         let directions = [
             {'x': -1, 'y': 0},
@@ -185,7 +194,7 @@ class Board
                 if ((targetCol >= 0) && (targetCol < this._width)
                     && (targetRow >= 0) && (targetRow < this._height)
                 ){
-                    if (this._columns[targetCol][targetRow] === "R") {
+                    if (this._columns[targetCol][targetRow] === color) {
                         stack.push([targetCol, targetRow]);
                     }
                 }
