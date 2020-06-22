@@ -39,9 +39,9 @@ body, input, a {
   display: flex;
 }
 
-.game-header .content input,
-.game-header .content a {
-  margin: 10px;
+.link {
+  margin-top: 10px;
+  display: flex;
 }
 
 .col {

@@ -10,20 +10,28 @@ if (array_key_exists('height', $_GET)) {
 } else {
     $height = 6;
 }
+if (array_key_exists('game_level', $_GET)) {
+    $game_level = $_GET['game_level'];
+} else {
+    $height = 1;
+}
 //if (array_key_exists('connections', $_GET)) {
 //    $connections = $_GET['connections'];
 //} else {
 //    $connections = 4;
 //}
+$url = "play.php?width=$width&height=$height&game_level=$game_level";
 ?>
 <div class="game-header">
     <div class="content">
+        <span>Width: <?php echo $width; ?> Height: <?php echo $height; ?> Level: <?php echo $game_level; ?></span>
         <form>
             <input type="hidden" id="range-width" value="<?php echo $width; ?>">
             <input type="hidden" id="range-height" value="<?php echo $height; ?>">
-            <input type="submit" value="Refresh Game">
+            <input type="hidden" id="game-level" value="<?php echo $game_level; ?>">
         </form>
-        <a href="index.php">Change Game Size</a>
+        <a href="play.php?<?php echo $url; ?>" class="link">Re-start Game</a>
+        <a href="index.php" class="link">Change Parameters</a>
     </div>
 
 </div>
@@ -57,7 +65,7 @@ if (array_key_exists('height', $_GET)) {
             }
 
 
-            let board = new Board($("#range-width").val(), $("#range-height").val());
+            let board = new Board($("#range-width").val(), $("#range-height").val(), $("#game-level").val());
             board.draw();
             addEvent();
         });

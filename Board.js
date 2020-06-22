@@ -1,8 +1,9 @@
 class Board
 {
-    constructor(width, height) {
-        this._width = width;
-        this._height = height;
+    constructor(width = 7, height = 6, game_level = 1) {
+        this._width = parseInt(width);
+        this._height = parseInt(height);
+        this._game_level = parseInt(game_level);
         this._columns = [];
         this._winners = [];
         this._connections = 4;
@@ -123,22 +124,27 @@ class Board
     }
 
     computerTurn() {
-        // find if computer Blue has a posible winner position
-        this.findPossibleWinner("B");
-        if (this._posible_winner.length>0) {
-            console.log("Computer has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
-            this.dropCoin(this._posible_winner[0][0], 'B');
-            return;
+        // find if computer Blue has a posible winner position (level 2)
+        if (this._game_level >= 2) {
+            this.findPossibleWinner("B");
+            if (this._posible_winner.length>0) {
+                console.log("Computer has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
+                this.dropCoin(this._posible_winner[0][0], 'B');
+                return;
+            }
         }
 
-        // find if human Red has a posible winner position
-        this.findPossibleWinner("R");
-        if (this._posible_winner.length>0) {
-            console.log("Human has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
-            this.dropCoin(this._posible_winner[0][0], 'B');
-            return;
+        // find if human Red has a posible winner position (level 3)
+        if (this._game_level >= 3) {
+            this.findPossibleWinner("R");
+            if (this._posible_winner.length>0) {
+                console.log("Human has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
+                this.dropCoin(this._posible_winner[0][0], 'B');
+                return;
+            }
         }
-        // just do a random draw
+
+        // just do a random draw (level 1)
         let done = false;
         while(!done) {
             let randomColumn = Math.floor(Math.random() * (this._width) );
