@@ -27,9 +27,11 @@ $game_level = 1;
 <!--                <output  id="range_connections_disp">--><?php //echo $connections ?><!--</output><br>-->
 <!--                <input class="range-selector" type="range" name="connections" id="range_connections" value="--><?php //echo $connections ?><!--" min="4" max="20" oninput="range_connections_disp.value = range_connections.value">-->
 <!--            </div>-->
-            <input type="submit" value="Play">
+            <input type="submit" value="Play Now!" class="boton">
         </form>
         <ul>
+            <li><img src="red_coin.png" height="20"> Coin for human</li>
+            <li><img src="blue_coin.png" height="20"> Coin for computer</li>
             <li>Level 1: Computer just do a random draw</li>
             <li>Level 2: If computer has three inline will try to use it </li>
             <li>Level 3: If human has three inline the computar will try to block </li>
