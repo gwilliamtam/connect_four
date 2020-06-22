@@ -1,3 +1,3 @@
 # connect_four
 
-You can demo this at http://willysites.com/connectFour
+You can check a demo of this small game at http://willysites.com/connectFour
