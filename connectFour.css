@@ -85,6 +85,16 @@ body, input, a {
 
 .winner {
   border: 3px yellow dashed;
+  border-radius: 15px;
+}
+
+.posible-winner {
+  border: 3px rgba(0, 0, 0, 0.05) dashed;
+  border-radius: 15px;
+}
+
+.unavailable {
+  color: silver;
 }
 
 /*# sourceMappingURL=connectFour.css.map */

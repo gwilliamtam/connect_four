@@ -33,6 +33,10 @@ $game_level = 1;
             <li>Level 1: Computer just do a random draw</li>
             <li>Level 2: If computer has three inline will try to use it </li>
             <li>Level 3: If human has three inline the computar will try to block </li>
+            <li class="unavailable">Not available yet:</li>
+            <li class="unavailable">Level 4: Detect computer posible win with three cells that are not adjacent</li>
+            <li class="unavailable">Level 5: Detect human posible win with three cells that are not adjacent</li>
+            <li class="unavailable">Level 6: Computer will draw in a column with more winning posibilities like position a coin adjacent to other existent coin and empty cells in line.</li>
             <li>Higher levels include any lower level</li>
         </ul>
     </div>

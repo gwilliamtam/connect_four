@@ -47,6 +47,12 @@ class Board
     }
 
     dropCoin(columnNumber, color = 'R') {
+        for (let i=0; i<this._width; i++) {
+            for (let j=0; j<this._height; j++) {
+                let cell = document.getElementById(i + '-' + j);
+                cell.classList.remove('posible-winner');
+            }
+        }
         for(let row=0; row<this._columns[columnNumber].length; row++) {
             if (row<this._height) {
                 if (this._columns[columnNumber][row] == 'W') {
@@ -123,6 +129,12 @@ class Board
 
     }
 
+    markPosibleWinner(col, row) {
+        let posWinEl = document.getElementById(col
+            + '-' + row);
+        posWinEl.classList.add('posible-winner');
+    }
+
     computerTurn() {
         // find if computer Blue has a posible winner position (level 2)
         if (this._game_level >= 2) {
@@ -130,6 +142,7 @@ class Board
             if (this._posible_winner.length>0) {
                 console.log("Computer has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
                 this.dropCoin(this._posible_winner[0][0], 'B');
+                this.markPosibleWinner(this._posible_winner[0][0], this._posible_winner[0][1]);
                 return;
             }
         }
@@ -140,6 +153,7 @@ class Board
             if (this._posible_winner.length>0) {
                 console.log("Human has ", this._posible_winner.length, " posible(s) winner(s) cell(s): ", this._posible_winner);
                 this.dropCoin(this._posible_winner[0][0], 'B');
+                this.markPosibleWinner(this._posible_winner[0][0], this._posible_winner[0][1]);
                 return;
             }
         }
