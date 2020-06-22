@@ -37,8 +37,8 @@ class Board
     }
 
     columnAvailable(column) {
-        if (column<this._width) {
-            if (this._columns[column][0] == 'W') {
+        if (parseInt(column)<parseInt(this._width)) {
+            if (this._columns[column][0] === 'W') {
                 return true;
             }
         }
@@ -178,11 +178,13 @@ class Board
     isPosibleWinner(col, row, color) {
         let searchConnections = this._connections - 1;
         let directions = [
+            {'x': -1, 'y': -1},
             {'x': -1, 'y': 0},
             {'x': -1, 'y': 1},
             {'x': 0, 'y': 1},
             {'x': 1, 'y': 1},
             {'x': 1, 'y': 0},
+            {'x': 1, 'y': -1},
         ];
         for (let i=0; i<directions.length; i++) {
             let stack = [];

@@ -2,23 +2,35 @@ $header_height: 100px;
 
 body {
   margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body, input, a {
+  margin: 0;
   font-family: Verdana;
 }
 
 .game-header {
   padding: 0;
   height: #{$header_height};
+  margin: 0 25px;
+}
+
+.content {
+  width: 90%;
+  margin: 0 25px;
 }
 
 .slider {
-  width: 45%;
+  width: 100%;
   display: inline-block;
   padding: 0;
-  margin: 5px;
+  margin: 25px;
 }
 
 .slider input[type=range] {
-  margin: 0;
+  margin: 10px;
   padding: 0;
   width: 100%;
 }
@@ -27,6 +39,11 @@ body {
   height: calc(100vh - #{$header_height});
   background-color: #F3F3F3;
   display: flex;
+}
+
+.game-header .content input,
+.game-header .content a {
+  margin: 10px;
 }
 
 .col {
