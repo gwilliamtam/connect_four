@@ -13,7 +13,7 @@ if (array_key_exists('height', $_GET)) {
 if (array_key_exists('game_level', $_GET)) {
     $game_level = $_GET['game_level'];
 } else {
-    $height = 1;
+    $game_level = 1;
 }
 //if (array_key_exists('connections', $_GET)) {
 //    $connections = $_GET['connections'];
@@ -30,7 +30,7 @@ $url = "play.php?width=$width&height=$height&game_level=$game_level";
             <input type="hidden" id="range-height" value="<?php echo $height; ?>">
             <input type="hidden" id="game-level" value="<?php echo $game_level; ?>">
         </form>
-        <a href="play.php?<?php echo $url; ?>" class="link">Re-start Game</a>
+        <a href="<?php echo $url; ?>" class="link">Re-start Game</a>
         <a href="index.php" class="link">Change Parameters</a>
     </div>
 

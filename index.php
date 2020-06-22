@@ -34,7 +34,7 @@ $game_level = 1;
             <li><img src="blue_coin.png" height="20"> Coin for computer</li>
             <li>Level 1: Computer just do a random draw</li>
             <li>Level 2: If computer has three inline will try to use it </li>
-            <li>Level 3: If human has three inline the computar will try to block </li>
+            <li>Level 3: If human has three inline the computer will try to block </li>
             <li class="unavailable">Not available yet:</li>
             <li class="unavailable">Level 4: Detect computer posible win with three cells that are not adjacent</li>
             <li class="unavailable">Level 5: Detect human posible win with three cells that are not adjacent</li>
